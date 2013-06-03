@@ -14,7 +14,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.regex.Pattern;
 
-import de.roderick.weberknecht.WebSocketConnection;
+import de.roderick.weberknecht.WebSocket;
 import de.roderick.weberknecht.WebSocketEventHandler;
 import de.roderick.weberknecht.WebSocketException;
 import de.roderick.weberknecht.WebSocketMessage;
@@ -24,7 +24,7 @@ import de.roderick.weberknecht.WebSocketMessage;
  */
 class WebsocketTransport implements IOTransport, WebSocketEventHandler {
 	
-	WebSocketConnection websocket;
+	WebSocket websocket;
 	
 	/** Pattern used to replace http:// by ws:// respectively https:// by wss:// */
 	private final static Pattern PATTERN_HTTP = Pattern.compile("^http");
@@ -60,7 +60,7 @@ class WebsocketTransport implements IOTransport, WebSocketEventHandler {
 	 */
 	public WebsocketTransport(URI uri, IOConnection connection) {
 		try {
-			websocket = new WebSocketConnection(uri);
+			websocket = new WebSocket(uri);
 		} catch (WebSocketException e) {
 			connection.transportError(e);
 			return;
@@ -140,5 +140,13 @@ class WebsocketTransport implements IOTransport, WebSocketEventHandler {
 	@Override
 	public String getName() {
 		return TRANSPORT_NAME;
+	}
+
+	@Override
+	public void onPing(){
+	}
+
+	@Override
+	public void onPong(){
 	}
 }

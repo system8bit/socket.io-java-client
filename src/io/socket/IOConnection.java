@@ -211,6 +211,10 @@ class IOConnection implements IOCallback {
 		sslSocketFactory = socketFactory;
 	}
 
+	public static SSLSocketFactory getDefaultSSLSocketFactory() {
+		return sslSocketFactory;
+	}
+
 	/**
 	 * Creates a new connection or returns the corresponding one.
 	 * 
