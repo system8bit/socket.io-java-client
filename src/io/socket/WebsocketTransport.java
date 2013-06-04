@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2012, Enno Boland
  * socket.io-java-client is a implementation of the socket.io protocol in Java.
- * 
+ *
  * See LICENSE file for more information
  */
 package io.socket;
@@ -23,18 +23,18 @@ import de.roderick.weberknecht.WebSocketMessage;
  * The Class WebsocketTransport.
  */
 class WebsocketTransport implements IOTransport, WebSocketEventHandler {
-	
+
 	WebSocket websocket;
-	
+
 	/** Pattern used to replace http:// by ws:// respectively https:// by wss:// */
 	private final static Pattern PATTERN_HTTP = Pattern.compile("^http");
-	
+
 	/** The String to identify this Transport */
 	public static final String TRANSPORT_NAME = "websocket";
-	
+
 	/** The IOConnection of this transport. */
 	private IOConnection connection;
-	
+
 	/**
 	 * Creates a new Transport for the given url an {@link IOConnection}.
 	 *
@@ -50,16 +50,17 @@ class WebsocketTransport implements IOTransport, WebSocketEventHandler {
 
 		return new WebsocketTransport(uri, connection);
 	}
-	
+
 	/**
 	 * Instantiates a new websocket transport.
 	 *
 	 * @param uri the uri
 	 * @param connection the connection
-	 * @throws WebSocketException 
+	 * @throws WebSocketException
 	 */
 	public WebsocketTransport(URI uri, IOConnection connection) {
 		try {
+			WebSocket.setDefaultSSLSocketFactory(IOConnection.getDefaultSSLSocketFactory());
 			websocket = new WebSocket(uri);
 		} catch (WebSocketException e) {
 			connection.transportError(e);
